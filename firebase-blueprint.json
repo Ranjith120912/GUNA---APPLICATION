@@ -1,0 +1,203 @@
+
+{
+  "entities": {
+    "Farmer": {
+      "title": "Farmer",
+      "description": "A milk supplier/farmer profile",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "canNumber": {
+          "type": "string"
+        },
+        "milkType": {
+          "type": "string",
+          "enum": ["COW", "BUFFALO"]
+        },
+        "customRate": {
+          "type": "number",
+          "description": "Specific rate for Buffalo farmers if different from global default"
+        },
+        "bankAccountNumber": {
+          "type": "string"
+        },
+        "ifscCode": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["name", "canNumber"]
+    },
+    "MilkEntry": {
+      "title": "Milk Entry",
+      "description": "A daily milk collection record",
+      "type": "object",
+      "properties": {
+        "farmerId": {
+          "type": "string"
+        },
+        "farmerName": {
+          "type": "string",
+          "description": "Persisted name at time of entry"
+        },
+        "canNumber": {
+          "type": "string",
+          "description": "Persisted CAN at time of entry"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "session": {
+          "type": "string",
+          "enum": ["Morning", "Evening"]
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Quantity in Litres"
+        },
+        "kgWeight": {
+          "type": "number",
+          "description": "Weight in Kg"
+        },
+        "rate": {
+          "type": "number"
+        },
+        "totalAmount": {
+          "type": "number"
+        }
+      }
+    },
+    "Buyer": {
+      "title": "Buyer",
+      "description": "A milk distribution customer/buyer",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "buyerCode": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["name", "buyerCode"]
+    },
+    "Sale": {
+      "title": "Sale",
+      "description": "A daily milk sale record",
+      "type": "object",
+      "properties": {
+        "buyerId": {
+          "type": "string"
+        },
+        "buyerName": {
+          "type": "string"
+        },
+        "buyerCode": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "session": {
+          "type": "string",
+          "enum": ["Morning", "Evening"]
+        },
+        "milkType": {
+          "type": "string",
+          "enum": ["COW", "BUFFALO"]
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "rate": {
+          "type": "number"
+        },
+        "totalAmount": {
+          "type": "number"
+        }
+      }
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Global application configuration",
+      "type": "object",
+      "properties": {
+        "companyName": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "stampUrl": {
+          "type": "string",
+          "description": "Data URI or URL for the business stamp/signature"
+        },
+        "cowRate": {
+          "type": "number"
+        },
+        "buffaloRate": {
+          "type": "number"
+        },
+        "cowSellingRate": {
+          "type": "number"
+        },
+        "buffaloSellingRate": {
+          "type": "number"
+        },
+        "kgToLitreRate": {
+          "type": "number",
+          "description": "Conversion factor from Kg to Litres (default 0.971)"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["password"]
+  },
+  "firestore": {
+    "/farmers/{farmerId}": {
+      "schema": "Farmer",
+      "description": "Registered milk suppliers"
+    },
+    "/entries/{entryId}": {
+      "schema": "MilkEntry",
+      "description": "Daily collection records"
+    },
+    "/buyers/{buyerId}": {
+      "schema": "Buyer",
+      "description": "Collection of milk buyers"
+    },
+    "/sales/{saleId}": {
+      "schema": "Sale",
+      "description": "Daily sales records"
+    },
+    "/settings/{settingsId}": {
+      "schema": "Settings",
+      "description": "Global settings"
+    }
+  }
+}

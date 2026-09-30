@@ -1,0 +1,11 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Abstract fluid shapes in shades of blue",
+      "imageUrl": "https://picsum.photos/seed/litrelink1/1200/800",
+      "imageHint": "abstract fluid"
+    }
+  ]
+}
